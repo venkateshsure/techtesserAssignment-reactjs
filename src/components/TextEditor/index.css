@@ -1,0 +1,10 @@
+.container {
+  border: 1px solid blue;
+  width: 100vh;
+  height: 50vh;
+}
+
+#text-con {
+  width: 300px;
+  border: 1px solid red;
+}
