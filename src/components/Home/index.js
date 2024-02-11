@@ -5,8 +5,38 @@ import Draggable from "react-draggable";
 
 import "./index.css";
 
+const arrayOfObjects = [
+  {
+    id: 1,
+    fontFamily: "Roboto",
+    fontSize: 16,
+    color: "black",
+  },
+
+  {
+    id: 2,
+    fontFamily: "Arial",
+    fontSize: 20,
+  },
+  {
+    id: 3,
+    fontFamily: "cursive",
+    fontSize: 25,
+  },
+  {
+    id: 4,
+    fontFamily: "fantasy",
+    fontSize: 30,
+  },
+];
+
 class Home extends Component {
-  state = { currentColor: "#fff", text: "Tech Tesser" };
+  state = {
+    currentColor: "#fff",
+    text: "Tech Tesser",
+    fontFamily: arrayOfObjects[0].fontFamily,
+    fontSize: arrayOfObjects[0].fontSize,
+  };
 
   onChangeColor = (color) => {
     this.setState({ currentColor: color.hex });
@@ -16,11 +46,22 @@ class Home extends Component {
     this.setState({ text: event.target.value });
   };
 
+  onChangeFontFamily = (event) => {
+    this.setState({ fontFamily: event.target.value });
+  };
+
+  onChangeFontSize = (event) => {
+    const fontValue = parseInt(event.target.value);
+    this.setState({ fontSize: fontValue });
+  };
+
   render() {
-    const { currentColor, text } = this.state;
+    const { currentColor, text, fontFamily, fontSize } = this.state;
 
     const textStyle = {
       color: currentColor,
+      fontFamily: fontFamily,
+      fontSize: fontSize,
     };
 
     return (
@@ -53,6 +94,27 @@ class Home extends Component {
               placeholder="Enter the text"
               onChange={this.onChangeInput}
             />
+          </div>
+
+          <div className="select-containers">
+            <label htmlFor="font-family">Font Family :</label>
+            <select onChange={this.onChangeFontFamily} id="font-family">
+              {arrayOfObjects.map((each) => (
+                <option value={each.fontFamily} key={each.id}>
+                  {each.fontFamily}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="select-containers">
+            <label htmlFor="font-size">Font Size :</label>
+            <select onChange={this.onChangeFontSize} id="font-size">
+              {arrayOfObjects.map((each) => (
+                <option value={each.fontSize} key={each.id}>
+                  {each.fontSize}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
