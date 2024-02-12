@@ -33,9 +33,12 @@ const arrayOfObjects = [
 class Home extends Component {
   state = {
     currentColor: "#fff",
-    text: "Tech Tesser",
+    text1: "Tech Tesser",
+    text2: "Looking for internships",
+    text3: "I am doing",
     fontFamily: arrayOfObjects[0].fontFamily,
     fontSize: arrayOfObjects[0].fontSize,
+    selectedText: null,
   };
 
   onChangeColor = (color) => {
@@ -43,7 +46,8 @@ class Home extends Component {
   };
 
   onChangeInput = (event) => {
-    this.setState({ text: event.target.value });
+    const { selectedText } = this.state;
+    this.setState({ [selectedText]: event.target.value });
   };
 
   onChangeFontFamily = (event) => {
@@ -55,17 +59,34 @@ class Home extends Component {
     this.setState({ fontSize: fontValue });
   };
 
-  render() {
-    const { currentColor, text, fontFamily, fontSize } = this.state;
+  handleStart = (e, data, textId) => {
+    this.setState({ selectedText: textId });
+  };
 
-    const textStyle = {
+  render() {
+    const {
+      currentColor,
+      text1,
+      text2,
+      selectedText,
+      fontFamily,
+      fontSize,
+    } = this.state;
+
+    const textStyle1 = {
+      color: currentColor,
+      fontFamily: fontFamily,
+      fontSize: fontSize,
+    };
+
+    const textStyle2 = {
       color: currentColor,
       fontFamily: fontFamily,
       fontSize: fontSize,
     };
 
     return (
-      <div>
+      <div className="con">
         <div className="fir-con">
           <div className="container">
             <Draggable
@@ -76,23 +97,47 @@ class Home extends Component {
               grid={[25, 25]}
               scale={1}
               bounds="parent"
-              onStart={this.handleStart}
+              onStart={(e, data) => this.handleStart(e, data, "text1")}
               onDrag={this.handleDrag}
               onStop={this.handleStop}
             >
               <div className="handle" id="text-con">
-                <p style={textStyle}>{text}</p>
+                <p style={selectedText === "text1" ? textStyle1 : null}>
+                  {text1}
+                </p>
+              </div>
+            </Draggable>
+          </div>
+          <div className="container">
+            <Draggable
+              axis="both"
+              handle=".handle"
+              defaultPosition={{ x: 0, y: 0 }}
+              position={null}
+              grid={[25, 25]}
+              scale={1}
+              bounds="parent"
+              onStart={(e, data) => this.handleStart(e, data, "text2")}
+              onDrag={this.handleDrag}
+              onStop={this.handleStop}
+            >
+              <div className="handle" id="text-con">
+                <p style={selectedText === "text2" ? textStyle2 : null}>
+                  {text2}
+                </p>
               </div>
             </Draggable>
           </div>
         </div>
-        <div className="head-con">
-          <div className="sec-con">
-            <p>Change Text</p>
+        <div className="sec-con">
+          <div className="input-con">
+            <p>Change Text: </p>
             <input
               type="text"
               placeholder="Enter the text"
               onChange={this.onChangeInput}
+              className="input"
+              value={selectedText === "text1" ? text1 : text2}
             />
           </div>
 
@@ -116,15 +161,43 @@ class Home extends Component {
               ))}
             </select>
           </div>
-        </div>
 
-        <SketchPicker
-          color={currentColor}
-          onChangeComplete={this.onChangeColor}
-        />
+          <div className="">
+            <p>color :</p>
+            <SketchPicker
+              color={currentColor}
+              onChangeComplete={this.onChangeColor}
+            />
+          </div>
+        </div>
       </div>
     );
   }
 }
 
 export default Home;
+
+/* <div className="container">
+            <Draggable
+              axis="both"
+              handle=".handle"
+              defaultPosition={{ x: 0, y: 0 }}
+              position={null}
+              grid={[25, 25]}
+              scale={1}
+              bounds="parent"
+              onStart={this.handleStart}
+              onDrag={this.handleDrag}
+              onStop={this.handleStop}
+            >
+              <div className="handle" id="text-con">
+                <p style={textStyle}>My assignment</p>
+                <p style={textStyle}>Tech Tessar</p>
+                <p style={textStyle}>Looking for internships</p>
+              </div>
+            </Draggable>
+          </div> 
+          
+          
+         <p style={textStyle}>{text2}</p>
+                <p style={textStyle}>{text3}</p> */
