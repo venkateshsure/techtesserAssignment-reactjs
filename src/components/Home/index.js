@@ -176,28 +176,3 @@ class Home extends Component {
 }
 
 export default Home;
-
-/* <div className="container">
-            <Draggable
-              axis="both"
-              handle=".handle"
-              defaultPosition={{ x: 0, y: 0 }}
-              position={null}
-              grid={[25, 25]}
-              scale={1}
-              bounds="parent"
-              onStart={this.handleStart}
-              onDrag={this.handleDrag}
-              onStop={this.handleStop}
-            >
-              <div className="handle" id="text-con">
-                <p style={textStyle}>My assignment</p>
-                <p style={textStyle}>Tech Tessar</p>
-                <p style={textStyle}>Looking for internships</p>
-              </div>
-            </Draggable>
-          </div> 
-          
-          
-         <p style={textStyle}>{text2}</p>
-                <p style={textStyle}>{text3}</p> */
